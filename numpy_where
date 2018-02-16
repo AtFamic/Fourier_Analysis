@@ -1,0 +1,69 @@
+NumPyではnp.where()を使って
+np.where(条件, x, y)のように書きます。
+x,yは配列または数値。数値ならブロードキャストされる。
+
+    a3 = np.where(condi, list1, list2)
+    print(a3)     # [ 1 12  3 14  5]
+
+他にも
+
+    a1 = np.arange(9).reshape(3, 3)
+    print(a1)
+    # [[0 1 2]
+    #  [3 4 5]
+    #  [6 7 8]]
+    
+    # 3未満の要素を0で置き換える(1)
+    print(np.where(a1 < 3, 0, a1))
+    # [[0 0 0]
+    #  [3 4 5]
+    #  [6 7 8]]
+    
+    # 3未満の要素を0で置き換える(2)
+    print(np.where(a1 >= 3, a1, 0))
+    # [[0 0 0]
+    #  [3 4 5]
+    #  [6 7 8]]
+    
+    # 正なら1、正でないなら-1にする
+    print(np.where(a1 > 0, 1, -1))
+    # [[-1  1  1]
+    #  [ 1  1  1]
+    #  [ 1  1  1]]
+    
+np.where()の引数を条件の配列だけにすると、
+Trueとなる要素のインデックスを取得。
+
+    a1 = np.arange(9).reshape(3, 3)
+    print(a1)
+    # [[0 1 2]
+    #  [3 4 5]
+    #  [6 7 8]]
+    
+    # Trueとなる要素のインデックスを取得
+    print(np.where(a1 > 5))
+    # (array([2, 2, 2], dtype=int32), array([0, 1, 2], dtype=int32))
+    
+    # そのインデックスを利用して、要素を取り出せる。
+    print(a1[np.where(a1 > 5)])
+    # [6 7 8]
+    
+    # Trueとなる要素のインデックスを取得
+    print(np.where(a1 > 2))
+    # (array([1, 1, 1, 2, 2, 2], dtype=int32), array([0, 1, 2, 0, 1, 2], dtype=int32))
+    
+    # そのインデックスを利用して、要素を取り出せる。
+    print(a1[np.where(a1 > 2)])
+    # [3 4 5 6 7 8]
+    
+    # 値の検索
+    target = [3, 4, 7]
+    ix = np.in1d(a1.ravel(), target).reshape(a1.shape)
+    print(ix)
+    # [[False False False]
+    #  [ True  True False]
+    #  [False  True False]]
+    
+    # そのインデックスを表示
+    print(np.where(ix))
+    # (array([1, 1, 2], dtype=int32), array([0, 1, 1], dtype=int32))
