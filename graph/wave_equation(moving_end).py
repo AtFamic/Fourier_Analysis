@@ -20,14 +20,14 @@ c = 2
 a = []
 
 def y(x,t):
-    result =x
-    result[np.where(c*(t-1)<x)] = np.sin(np.pi*(t-x[np.where(c*(t-1)<x)]/c))
-    if np.where(x<c*t):
-        np.sin(np.pi * (t - x[np.where(x<c*t)] / c))
-    if np.where(x<c*(t-1)):
-        0
-    if np.where(c*t<x):
-        0
+    result = []
+    x_axis = list(x)
+    for i in range(len(x_axis)):
+        if c * (t-1) <= x_axis[i] and x_axis[i] <= c * t:
+            result.insert(i, np.sin(np.pi * (t - x_axis[i] / c)))
+        if x_axis[i] < c *(t-1) or c * t < x_axis[i]:
+            result.insert(i, 0)
+    return result
 
 for i in x0:
     value = y(x0,t0)
@@ -43,7 +43,7 @@ def _update_plot(i):
     ax1.clear()
     plt.plot(x0,x)
     plt.grid(True)
-    plt.ylim([-1,4])
+    plt.ylim([-1,2])
     plt.xlim([0,20])
 
 
